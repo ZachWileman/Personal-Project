@@ -10,13 +10,17 @@
 
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-import sys, os, re, time
+import sys, os, re, time, json
 
 # Class used for saving info for each YouTube channel
 class Channel:
+
+    # Sets the channel name
     def __init__(self, channelName):
         self.latestVideo = ""
         self.name = channelName
+
+    # checks if the video is new
     def checkVideo(self, videoTitle):
         if videoTitle != self.latestVideo:
             print('New video found!')
@@ -28,13 +32,43 @@ class Channel:
 YOUTUBE_LINK = 'https://www.youtube.com/'
 
 # Gets user input for channels
+# NOTE: With newer channels, usernames no longer work so instead you'll have
+# to enter part of the url of the channel such as: 'channel/' followed by the
+# channel id
 channels = input('Please enter YouTube channels you\'d like to follow, each ' +
                  'separated by a comma.\nEx.(channel1, channel2, ect.): ').split(', ')
 
 # Creates a list of Channel objects
 channelList = [Channel(channel) for channel in channels]
 
-############### Also, look into saving latest video information to some sort of log file, maybe json?
+# Gets user choice for importing previous channel info
+importChoice = input('Would you like to import past channel info from' +
+                     ' previous program runs? (yes or no): ')
+
+# If the user chooses to import
+if importChoice == 'yes':
+    
+    # Tries to import the JSON file 
+    try:
+
+        # Loads in the JSON file and adds the info to channelList if the
+        # channel isn't already in the list.
+        with open('youtubeData.json', 'r') as f:
+            jsonList = json.load(f)
+        for channel in jsonList:
+            temp = Channel(channel['channelName'])
+            temp.latestVideo = channel['latestVideo']
+            if channel['channelName'] not in channels:
+                channelList.append(temp)
+    
+    # If there is no JSON file to import, reports so and then continues
+    except FileNotFoundError as e:
+        print('No file found to import data from.')
+
+# Make a json list out of channelList to then put in a json file
+jsonList = [{"channelName": channel.name, "latestVideo": channel.latestVideo} for channel in channelList]
+with open('youtubeData.json', 'w') as f:
+    json.dump(jsonList, f)
 
 # Loops every five minutes, checking for new videos from the given channels
 while True:
@@ -77,14 +111,3 @@ while True:
 
     # Has the program check every 5 minutes for new videos
     time.sleep(5*60)
-
-        # Don't need these lines when done. Temporarily using for viewing files.
-        #fileName = 'htmlFile' + str(number) + '.html'
-        #with open(fileName, 'w') as f:
-        #    f.write(htmlFiles[number])
-
-# When using regex to find links in the html, use: 'h3 class="yt-lockup-title'
-# <h3 class="yt-lockup-title ">\n.*
-# <h3\sclass=\"yt-lockup-title\s\"
-
-# os.system('youtube-dl -o "E:/Users/spart/Videos/YouTube Videos/%(title)s.%(ext)s" https://www.youtube.com/watch?v=r4ZrDSR81RE')
