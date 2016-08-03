@@ -38,8 +38,17 @@ YOUTUBE_LINK = 'https://www.youtube.com/'
 channels = input('Please enter YouTube channels you\'d like to follow, each ' +
                  'separated by a comma.\nEx.(channel1, channel2, ect.): ').split(', ')
 
-# Creates a list of Channel objects
-channelList = [Channel(channel) for channel in channels]
+############################# Also, possibly add something for entering new channels while the
+############################# program is running?
+
+############################# Also, add option for inputting download location
+
+# Checks for empty list
+if '' not in channels:
+    # Creates a list of Channel objects
+    channelList = [Channel(channel) for channel in channels]
+else:
+    channelList = []
 
 # Gets user choice for importing previous channel info
 importChoice = input('Would you like to import past channel info from' +
@@ -65,10 +74,15 @@ if importChoice == 'yes':
     except FileNotFoundError as e:
         print('No file found to import data from.')
 
+
 # Make a json list out of channelList to then put in a json file
 jsonList = [{"channelName": channel.name, "latestVideo": channel.latestVideo} for channel in channelList]
 with open('youtubeData.json', 'w') as f:
     json.dump(jsonList, f)
+
+if not channelList:
+    print('No channels were entered or imported from the JSON file.\nExiting program.')
+    sys.exit(1)
 
 # Loops every five minutes, checking for new videos from the given channels
 while True:
