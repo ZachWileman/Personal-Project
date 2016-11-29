@@ -6,7 +6,8 @@
 # Program developed using Python 3.4.4
 
 # NOTE: I'm using the github project 'youtube-dl' to download the YouTube
-# videos.
+# videos. I do not endorse the downloading of YouTube videos. The program
+# I have made was made purley for educational purposes.
 
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
