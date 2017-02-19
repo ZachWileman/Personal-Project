@@ -174,8 +174,13 @@ while True:
                     fromAdd = username = userInfo['fromEmailAdd']
                     toAdd = userInfo['toEmailAdd']
                     password = userInfo['password']
-                    msg = ('Subject: New YouTube Video!\r\n' +
-                           'You\'ve got a new video downloaded from {} titled:\n{}'.format(channel.name, channel.latestVideo))
+                    msg = "\r\n".join([
+                            "From: {}".format(fromAdd),
+                            "To: {}".format(toAdd),
+                            "Subject: New YouTube Video!",
+                            "",
+                            "You\'ve got a new video downloaded from {} titled: {}".format(channel.name, channel.latestVideo)
+                          ])
                     
                     server = SMTP('smtp.gmail.com:587')
                     server.ehlo()
