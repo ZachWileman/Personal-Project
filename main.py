@@ -1,7 +1,7 @@
 # Personal Project - Goal is to make program that checks certain YouTube
 # channels that you tell it to follow and downloads new YouTube videos from
-# the channels. Also, I might look into a way of getting notifications on my
-# phone for when a new video is downloaded to my computer.
+# the channels. Also, notifies the user via email when a new video is 
+# downloaded to their computer.
 
 # Program developed using Python 3.5.2
 
@@ -216,6 +216,7 @@ while True:
     print('Waiting for 5 minutes to check for any new videos...\n')
     time.sleep(5*60)
 
-
-############################# Also, possibly add something for entering new channels while the
-############################# program is running?
+####### Possible Changes #######
+# Add something for entering new channels while program is running?
+# Change the default download location to where the program is runnning in a folder 
+################################
