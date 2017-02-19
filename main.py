@@ -3,7 +3,7 @@
 # the channels. Also, I might look into a way of getting notifications on my
 # phone for when a new video is downloaded to my computer.
 
-# Program developed using Python 3.4.4
+# Program developed using Python 3.5.2
 
 # NOTE: I'm using the github project 'youtube-dl' to download the YouTube
 # videos. I do not endorse the downloading of YouTube videos. The program
