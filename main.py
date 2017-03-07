@@ -219,4 +219,5 @@ while True:
 ####### Possible Changes #######
 # Add something for entering new channels while program is running?
 # Change the default download location to where the program is runnning in a folder 
+# Possibly remove the downloading of videos and just notify the user that a new video is available?
 ################################
